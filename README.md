@@ -1,6 +1,6 @@
 # fonk-match-field-validator
 
-[![CircleCI](https://badgen.net/github/status/Lemoncode/fonk-match-field-validator/master/ci?icon=circleci&label=circleci)](https://circleci.com/gh/Lemoncode/fonk-match-field-validator/tree/master)
+[![CircleCI](https://badgen.net/github/status/Lemoncode/fonk-match-field-validator/master?icon=circleci&label=circleci)](https://circleci.com/gh/Lemoncode/fonk-match-field-validator/tree/master)
 [![NPM Version](https://badgen.net/npm/v/@lemoncode/fonk-match-field-validator?icon=npm&label=npm)](https://www.npmjs.com/package/@lemoncode/fonk-match-field-validator)
 [![bundle-size](https://badgen.net/bundlephobia/min/@lemoncode/fonk-match-field-validator)](https://bundlephobia.com/result?p=@lemoncode/fonk-match-field-validator)
 
