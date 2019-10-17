@@ -6,19 +6,18 @@
 
 This is a [fonk](https://github.com/Lemoncode/fonk) microlibrary that brings validation capabilities to:
 
-// TODO: Update description and example.
-
-- Validate if a field of a form ....
+- Validate if a field of a form matchs with another field in same form.
 
 How to add it to an existing form validation schema:
 
 We have the following form model:
 
-```
+```javascript
 const myFormValues = {
-  product : 'shoes',
-  price: 20,
-}
+  login: 'user1',
+  password: 1234,
+  confirmPassword: 1234,
+};
 ```
 
 We can add a matchField validation to the myFormValues
@@ -27,7 +26,12 @@ We can add a matchField validation to the myFormValues
 import { matchField } from '@lemoncode/fonk-match-field-validator';
 
 const validationSchema = {
-  price: [matchField.validator],
+  confirmPassword: [
+    {
+      validator: matchField.validator,
+      customArgs: { field: 'password' },
+    },
+  ],
 };
 ```
 
@@ -38,7 +42,7 @@ You can customize the error message displayed in two ways:
 ```javascript
 import { matchField } from '@lemoncode/fonk-match-field-validator';
 
-matchField.setErrorMessage('El campo debe de ser numérico');
+matchField.setErrorMessage('El campo debe coincidir con {{field}}');
 ```
 
 - Locally just override the error message for this validationSchema:
@@ -47,10 +51,39 @@ matchField.setErrorMessage('El campo debe de ser numérico');
 import { matchField } from '@lemoncode/fonk-match-field-validator';
 
 const validationSchema = {
-  price: [
+  confirmPassword: [
     {
       validator: matchField.validator,
-      message: 'Error message only updated for the validation schema',
+      customArgs: { field: 'password' },
+      message: 'The field must match with {{field}}',
+    },
+  ],
+};
+```
+
+- Even if you have a nested field:
+
+```javascript
+const myFormValues = {
+  user: {
+    name: 'user1',
+    password: 1234,
+    confirmPassword: 1234,
+  },
+};
+```
+
+- Overriding the message:
+
+```javascript
+import { matchField } from '@lemoncode/fonk-match-field-validator';
+
+const validationSchema = {
+  'user.confirmPassword': [
+    {
+      validator: matchField.validator,
+      customArgs: { field: 'user.password' },
+      message: 'The field must match with {{field}}',
     },
   ],
 };

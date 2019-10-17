@@ -3,27 +3,48 @@ import {
   parseMessageWithCustomArgs,
 } from '@lemoncode/fonk';
 
-// TODO: Add validator type
-const VALIDATOR_TYPE = '';
+const VALIDATOR_TYPE = 'MATCH_FIELD';
 
-// TODO: Add default message
-let defaultMessage = '';
+let defaultMessage = 'The field must match with {{field}}';
 export const setErrorMessage = message => (defaultMessage = message);
 
 const isDefined = value => value !== void 0 && value !== null && value !== '';
 
-export const validator: FieldValidationFunctionSync = fieldValidatorArgs => {
-  const { value, message = defaultMessage, customArgs } = fieldValidatorArgs;
+interface CustomValidatorArgs {
+  field: string;
+}
 
-  // TODO: Add validator
-  const succeeded = !isDefined(value) || ...;
+const getValueByCustomArgs = (values, { field }: CustomValidatorArgs) =>
+  field.split('.').reduce((value, key) => value[key], values);
+
+const validate = (value, values, customArgs: CustomValidatorArgs) =>
+  value === getValueByCustomArgs(values, customArgs);
+
+export const validator: FieldValidationFunctionSync<
+  CustomValidatorArgs
+> = fieldValidatorArgs => {
+  const {
+    value,
+    values,
+    message = defaultMessage,
+    customArgs,
+  } = fieldValidatorArgs;
+
+  if (!isDefined(customArgs) || !isDefined(customArgs.field)) {
+    throw `Must provide valid customArgs: { field: '' } in ValidationSchema`;
+  }
+
+  if (!isDefined(values) || typeof values !== 'object') {
+    throw `Must provide valid "values" object`;
+  }
+
+  const succeeded = !isDefined(value) || validate(value, values, customArgs);
 
   return {
     succeeded,
     message: succeeded
       ? ''
-      : // TODO: Use if it has custom args
-        parseMessageWithCustomArgs(
+      : parseMessageWithCustomArgs(
           (message as string) || defaultMessage,
           customArgs
         ),
