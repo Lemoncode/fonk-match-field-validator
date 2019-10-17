@@ -26,12 +26,14 @@ We can add a matchField validation to the myFormValues
 import { matchField } from '@lemoncode/fonk-match-field-validator';
 
 const validationSchema = {
-  confirmPassword: [
-    {
-      validator: matchField.validator,
-      customArgs: { field: 'password' },
-    },
-  ],
+  field: {
+    confirmPassword: [
+      {
+        validator: matchField.validator,
+        customArgs: { field: 'password' },
+      },
+    ],
+  },
 };
 ```
 
@@ -51,13 +53,15 @@ matchField.setErrorMessage('El campo debe coincidir con {{field}}');
 import { matchField } from '@lemoncode/fonk-match-field-validator';
 
 const validationSchema = {
-  confirmPassword: [
-    {
-      validator: matchField.validator,
-      customArgs: { field: 'password' },
-      message: 'The field must match with {{field}}',
-    },
-  ],
+  field: {
+    confirmPassword: [
+      {
+        validator: matchField.validator,
+        customArgs: { field: 'password' },
+        message: 'The field must match with {{field}}',
+      },
+    ],
+  },
 };
 ```
 
@@ -79,13 +83,15 @@ const myFormValues = {
 import { matchField } from '@lemoncode/fonk-match-field-validator';
 
 const validationSchema = {
-  'user.confirmPassword': [
-    {
-      validator: matchField.validator,
-      customArgs: { field: 'user.password' },
-      message: 'The field must match with {{field}}',
-    },
-  ],
+  field: {
+    'user.confirmPassword': [
+      {
+        validator: matchField.validator,
+        customArgs: { field: 'user.password' },
+        message: 'The field must match with {{field}}',
+      },
+    ],
+  },
 };
 ```
 
