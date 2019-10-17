@@ -12,12 +12,12 @@ How to add it to an existing form validation schema:
 
 We have the following form model:
 
-```
+```javascript
 const myFormValues = {
-  login : 'user1',
+  login: 'user1',
   password: 1234,
   confirmPassword: 1234,
-}
+};
 ```
 
 We can add a matchField validation to the myFormValues
@@ -42,7 +42,7 @@ You can customize the error message displayed in two ways:
 ```javascript
 import { matchField } from '@lemoncode/fonk-match-field-validator';
 
-matchField.setErrorMessage('El campo debe coincidir con {field}');
+matchField.setErrorMessage('El campo debe coincidir con {{field}}');
 ```
 
 - Locally just override the error message for this validationSchema:
@@ -51,11 +51,39 @@ matchField.setErrorMessage('El campo debe coincidir con {field}');
 import { matchField } from '@lemoncode/fonk-match-field-validator';
 
 const validationSchema = {
-  price: [
+  confirmPassword: [
     {
       validator: matchField.validator,
       customArgs: { field: 'password' },
-      message: 'The field must match with {field}',
+      message: 'The field must match with {{field}}',
+    },
+  ],
+};
+```
+
+- Or even you have a nested field:
+
+```javascript
+const myFormValues = {
+  user: {
+    name: 'user1',
+    password: 1234,
+    confirmPassword: 1234,
+  },
+};
+```
+
+- Overriding the message:
+
+```javascript
+import { matchField } from '@lemoncode/fonk-match-field-validator';
+
+const validationSchema = {
+  'user.confirmPassword': [
+    {
+      validator: matchField.validator,
+      customArgs: { field: 'user.password' },
+      message: 'The field must match with {{field}}',
     },
   ],
 };
