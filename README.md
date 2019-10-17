@@ -61,7 +61,7 @@ const validationSchema = {
 };
 ```
 
-- Or even you have a nested field:
+- Even if you have a nested field:
 
 ```javascript
 const myFormValues = {
